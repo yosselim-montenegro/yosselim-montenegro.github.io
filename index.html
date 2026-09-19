@@ -563,10 +563,12 @@
     border-radius:28px;
     padding:36px 56px 56px;
     box-shadow:var(--shadow);
+    cursor:pointer;
   }
   .producto-grid .photo-frame{box-shadow:none;}
-  .producto-grid h3{font-size:26px;margin-bottom:16px;}
-  .producto-grid p{color:var(--text-soft);font-size:15px;margin-bottom:22px;}
+  .producto-grid h3{font-size:26px;line-height:1.25;margin-bottom:16px;min-height:2.5em;}
+  .producto-grid-desc{max-height:100px;overflow-y:auto;margin-bottom:22px;}
+  .producto-grid p{color:var(--text-soft);font-size:15px;margin:0;}
   .beneficios{list-style:none;margin-bottom:28px;}
   .beneficios li{
     display:flex;gap:10px;align-items:flex-start;
@@ -581,6 +583,268 @@
   .producto-carousel{padding:6px 6% 20px;align-items:flex-start;}
   .producto-carousel .producto-grid{flex:0 0 100%;}
   @media(min-width:700px){.producto-carousel .producto-grid{flex:0 0 88%;}}
+
+  /* ---------- Catálogo completo ---------- */
+  .catalogo-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:40px;
+  }
+  .catalogo-tab{
+    border:1.5px solid rgba(176,110,95,0.3);
+    background:#fff;
+    color:var(--rose-deep);
+    padding:10px 20px;
+    border-radius:50px;
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    cursor:pointer;
+    transition:background .25s,color .25s,transform .25s;
+  }
+  @media(hover:hover){
+    .catalogo-tab:hover{transform:translateY(-2px);}
+  }
+  .catalogo-tab.active{
+    background:#fff;
+    color:var(--rose-deep);
+    border-color:var(--rose-deep);
+  }
+  @media(hover:hover){
+    .catalogo-tab.active:hover{background:var(--rose-deep);color:#fff;}
+  }
+  .catalogo-tab-emoji{font-size:16px;line-height:1;flex:none;}
+  @media(max-width:600px){
+    .catalogo-tabs{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px;}
+    .catalogo-tabs-break{flex-basis:100%;order:1;width:0;height:0;margin:0;padding:0;}
+    .catalogo-tab{
+      order:0;
+      display:flex;align-items:center;justify-content:center;gap:0;
+      width:46px;height:46px;padding:0;border-radius:50%;
+      box-shadow:0 10px 24px -12px rgba(150,90,75,0.35);
+      max-width:70vw;white-space:nowrap;
+      transition:background .25s,color .25s;
+    }
+    .catalogo-tab.active{
+      order:2;
+      width:auto;padding:0 18px;border-radius:50px;
+      justify-content:flex-start;gap:8px;
+      transition:border-radius .35s ease,padding .35s ease,background .25s,color .25s;
+    }
+    .catalogo-tab .catalogo-tab-label{
+      display:grid;grid-template-columns:0fr;opacity:0;
+    }
+    .catalogo-tab .catalogo-tab-label > span{overflow:hidden;min-width:0;}
+    .catalogo-tab.active .catalogo-tab-label{
+      grid-template-columns:1fr;opacity:1;
+      transition:grid-template-columns .35s ease,opacity .2s ease;
+    }
+  }
+  .catalogo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:24px;
+  }
+  .catalogo-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 12px 30px -20px rgba(150,90,75,0.3);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    animation:catalogoCardIn .4s ease both;
+  }
+  @keyframes catalogoCardIn{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:none;}
+  }
+  .catalogo-card .photo-frame{border-radius:0;aspect-ratio:1/1;}
+  .catalogo-card-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1;}
+  .catalogo-card h4{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--text-dark);
+    margin-bottom:10px;
+    line-height:1.35;
+    min-height:2.7em;
+  }
+  .catalogo-price{
+    display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+  }
+  .catalogo-price .before{
+    text-decoration:line-through;
+    color:var(--text-soft);
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+  }
+  .catalogo-price .now{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-.2px;
+    color:var(--rose-deep);
+  }
+  .catalogo-price-badge{
+    position:absolute;bottom:8px;right:8px;z-index:1;
+    background:rgba(255,255,255,0.94);
+    border-radius:10px;padding:5px 9px;
+    display:flex;flex-direction:column;align-items:flex-end;
+    box-shadow:0 4px 12px -4px rgba(0,0,0,0.3);
+  }
+  .catalogo-price-badge .before{
+    text-decoration:line-through;color:var(--text-soft);
+    font-family:'Inter',sans-serif;font-size:10px;line-height:1.3;
+  }
+  .catalogo-price-badge .now{
+    font-family:'Inter',sans-serif;font-weight:700;font-size:14px;
+    letter-spacing:-.2px;color:var(--rose-deep);line-height:1.3;
+  }
+  .catalogo-card .btn{
+    padding:10px 18px;
+    font-size:12.5px;
+    justify-content:center;
+    width:100%;
+  }
+  .btn-cart,.btn-avail{
+    background:#f1e4d8;
+    color:var(--rose-deep);
+  }
+  .btn-cart:hover,.btn-avail:hover{background:#e8d5c2;transform:translateY(-3px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.15);}
+  .btn-cart svg{width:20px;height:20px;order:1;}
+  .catalogo-badge{
+    position:absolute;
+    top:12px;left:12px;
+    background:rgba(58,42,40,0.85);
+    color:#fff;
+    font-size:11px;
+    font-weight:600;
+    padding:5px 12px;
+    border-radius:50px;
+    z-index:1;
+  }
+  .catalogo-loading{color:var(--text-soft);font-size:14px;}
+  @media(max-width:600px){
+    .catalogo-grid{grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:14px;}
+  }
+  .catalogo-card{cursor:pointer;}
+
+  /* ---------- Modal de producto ---------- */
+  .product-modal{
+    position:fixed;inset:0;z-index:1000;
+    display:flex;align-items:flex-end;justify-content:center;
+    visibility:hidden;opacity:0;
+    transition:opacity .25s ease,visibility .25s ease;
+  }
+  .product-modal.open{visibility:visible;opacity:1;}
+  .product-modal-backdrop{
+    position:absolute;inset:0;background:rgba(58,42,40,0.55);backdrop-filter:blur(2px);
+  }
+  .product-modal-panel{
+    position:relative;background:#fff;width:100%;max-width:480px;height:88vh;
+    border-radius:24px 24px 0 0;overflow:hidden;
+    display:flex;flex-direction:column;
+    transform:translateY(24px);transition:transform .3s ease;
+  }
+  .product-modal.open .product-modal-panel{transform:translateY(0);}
+  @media(min-width:700px){
+    .product-modal{align-items:center;}
+    .product-modal-panel{border-radius:24px;height:85vh;}
+  }
+  .product-modal-close{
+    position:absolute;top:14px;right:14px;z-index:2;
+    width:34px;height:34px;border-radius:50%;border:none;
+    background:rgba(255,255,255,0.9);color:var(--rose-deep);
+    font-size:16px;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,0.3);
+  }
+  .product-modal-back{
+    position:absolute;top:12px;left:14px;z-index:2;
+    display:flex;align-items:center;gap:5px;
+    height:30px;padding:0 12px 0 8px;border-radius:50px;border:none;
+    background:var(--rose-deep);color:#fff;
+    font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+    cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,0,0,0.4);
+  }
+  .product-modal-back svg{width:14px;height:14px;}
+  .product-modal-back[hidden]{display:none;}
+  .product-modal-gallery{position:relative;background:var(--blush-soft);height:min(420px, 48vh);flex:none;}
+  .product-modal-img{width:100%;height:100%;object-fit:cover;display:block;}
+  .product-modal-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:36px;height:36px;border-radius:50%;border:none;
+    background:rgba(255,255,255,0.85);color:var(--rose-deep);
+    font-size:20px;line-height:1;cursor:pointer;
+  }
+  .product-modal-nav.prev{left:12px;}
+  .product-modal-nav.next{right:12px;}
+  .product-modal-nav[hidden]{display:none;}
+  .product-modal-dots{
+    position:absolute;bottom:10px;left:0;right:0;
+    display:flex;justify-content:center;gap:7px;
+    padding:5px 10px;
+  }
+  .product-modal-dots span{
+    width:7px;height:7px;border-radius:50%;
+    background:rgba(58,42,40,0.3);border:1.5px solid #fff;
+    box-shadow:0 1px 3px rgba(0,0,0,0.25);
+    transition:background .2s;
+  }
+  .product-modal-dots span.active{background:var(--rose-deep);}
+  .product-modal-top{padding:12px 22px 0;flex:none;}
+  .product-modal-name{font-size:18px;margin-bottom:2px;}
+  .product-modal-meta{color:var(--text-soft);font-size:12px;margin-bottom:6px;}
+  .product-modal-price{margin-bottom:2px;text-align:left;align-items:flex-start;}
+  .product-modal-scroll{flex:1;min-height:0;overflow-y:auto;padding:10px 22px;}
+  .product-modal-tabbar{
+    flex:none;
+    display:flex;gap:20px;overflow-x:auto;
+    margin:6px 22px 0;padding-bottom:0;border-bottom:1px solid rgba(58,42,40,0.1);
+    scrollbar-width:none;
+  }
+  .product-modal-tabbar::-webkit-scrollbar{display:none;}
+  .product-modal-tab{
+    flex:none;white-space:nowrap;background:none;border:none;cursor:pointer;
+    font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+    letter-spacing:.03em;text-transform:uppercase;color:var(--text-soft);
+    padding:0 0 8px;border-bottom:2px solid transparent;
+    transition:color .2s,border-color .2s;
+  }
+  .product-modal-tab.active{color:var(--rose-deep);border-color:var(--rose-deep);}
+  .product-modal-tabpanel p{color:var(--text-soft);font-size:14px;line-height:1.55;white-space:pre-line;}
+  .product-modal-benefits{margin:0;}
+  .product-modal-ingredients{list-style:none;margin:0;}
+  .product-modal-ingredients li{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+  .product-modal-ingredients li svg{width:16px;height:16px;color:var(--rose-dark);flex-shrink:0;margin-top:2px;}
+  .product-modal-ingredients li strong{display:block;color:var(--text-dark);font-size:14px;margin-bottom:2px;}
+  .product-modal-ingredients li span{color:var(--text-soft);font-size:14px;line-height:1.55;white-space:pre-line;}
+  .product-modal-included{display:flex;flex-direction:column;gap:10px;}
+  .product-modal-chip{
+    display:flex;align-items:center;gap:12px;
+    background:var(--blush-soft);border-radius:14px;padding:8px 10px 8px 8px;
+    transition:background .2s;
+  }
+  .product-modal-chip[data-sku]{cursor:pointer;}
+  .product-modal-chip[data-sku]:hover{background:var(--blush);}
+  .product-modal-chip img{width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#fff;}
+  .product-modal-chip .chip-noimg{
+    width:44px;height:44px;border-radius:10px;flex-shrink:0;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    color:var(--rose-dark);
+  }
+  .product-modal-chip .chip-noimg svg{width:20px;height:20px;}
+  .product-modal-chip .chip-name{flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--text-dark);line-height:1.35;}
+  .product-modal-chip .chip-qty{
+    flex:none;background:var(--rose-deep);color:#fff;
+    font-size:12px;font-weight:700;padding:4px 11px;border-radius:50px;
+  }
+  .product-modal-footer{
+    flex:none;padding:14px 22px calc(18px + env(safe-area-inset-bottom, 0px));
+    border-top:1px solid rgba(58,42,40,0.08);
+    box-shadow:0 -8px 16px -12px rgba(0,0,0,0.15);
+  }
+  .product-modal-buy{width:100%;justify-content:center;}
 
   /* ---------- Comunidad gallery ---------- */
   .gallery-grid{
@@ -739,6 +1003,7 @@
       <a href="#rutina">Rutina</a>
       <a href="#testimonios">Testimonios</a>
       <a href="#producto">Productos</a>
+      <a href="#catalogo">Catálogo</a>
       <a href="#comunidad">Comunidad</a>
       <a href="#negocio">Únete</a>
     </div>
@@ -953,73 +1218,23 @@
     <h2 class="section-title reveal">Lo que uso y recomiendo</h2>
     <p class="section-intro reveal">Productos Nu Skin originales que ya forman parte de mi rutina, presentados con honestidad — sin promesas exageradas.</p>
 
-    <!-- CONFIG: agrega más .producto-grid dentro de este carrusel a medida que sumes productos -->
-    <div class="carousel producto-carousel reveal" id="productoCarousel">
-      <div class="producto-grid">
-        <div class="photo-frame square">
-          <img src="img/epoch-polishing-bar.jpg" alt="Epoch Polishing Bar" loading="lazy">
-        </div>
-        <div>
-          <span class="eyebrow">Producto destacado</span>
-          <h3>Epoch Polishing Bar</h3>
-          <p>Una barra exfoliante ideal para zonas ásperas como axilas, brazos y codos. Ayuda a suavizar la piel con uso constante — sin irritarla y sin promesas irreales.</p>
-          <ul class="beneficios">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Suaviza zonas ásperas con el tiempo</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Ingredientes naturales, uso sencillo</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Parte de una rutina, no una solución mágica</li>
-          </ul>
-          <a class="btn btn-primary" href="https://wa.me/51942029354?text=Hola%2C%20quiero%20consultar%20sobre%20el%20Epoch%20Polishing%20Bar" target="_blank" rel="noopener">Consultar disponibilidad</a>
-        </div>
-      </div>
-      <div class="producto-grid">
-        <div class="photo-frame square">
-          <img src="img/lumispa-io.jpg" alt="ageLOC LumiSpa iO" loading="lazy">
-        </div>
-        <div>
-          <span class="eyebrow">Producto destacado</span>
-          <h3>ageLOC LumiSpa iO</h3>
-          <p>Un dispositivo de limpieza facial inteligente con tecnología Micropulse: limpia y trata la piel a la vez, en solo 2 minutos, dos veces al día. Se conecta a la app Vera para adaptar el tratamiento a tu piel.</p>
-          <ul class="beneficios">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Limpieza profunda + tratamiento en un solo paso</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Cabezales de silicona antimicrobiana, hasta 3 meses de uso</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Beneficios clínicamente comprobados con uso constante, no de un día para otro</li>
-          </ul>
-          <a class="btn btn-primary" href="https://wa.me/51942029354?text=Hola%2C%20quiero%20consultar%20sobre%20el%20LumiSpa%20iO" target="_blank" rel="noopener">Consultar disponibilidad</a>
-        </div>
-      </div>
-      <div class="producto-grid">
-        <div class="photo-frame square">
-          <img src="img/ap24-toothpaste.jpg" alt="AP 24 Whitening Fluoride Toothpaste" loading="lazy">
-        </div>
-        <div>
-          <span class="eyebrow">Producto destacado</span>
-          <h3>AP 24 Whitening Fluoride Toothpaste</h3>
-          <p>Pasta dental blanqueadora que ayuda a aclarar el tono natural de los dientes sin peróxido, mientras protege contra la formación de placa y caries con uso diario.</p>
-          <ul class="beneficios">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Blanqueamiento gradual, sin peróxido</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Protege contra placa y caries</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Uso diario, parte simple de tu rutina</li>
-          </ul>
-          <a class="btn btn-primary" href="https://wa.me/51942029354?text=Hola%2C%20quiero%20consultar%20sobre%20la%20pasta%20dental%20AP%2024" target="_blank" rel="noopener">Consultar disponibilidad</a>
-        </div>
-      </div>
-      <div class="producto-grid">
-        <div class="photo-frame square">
-          <img src="img/beauty-focus-collagen.jpg" alt="Beauty Focus Collagen+" loading="lazy">
-        </div>
-        <div>
-          <span class="eyebrow">Producto destacado</span>
-          <h3>Beauty Focus Collagen+</h3>
-          <p>Suplemento en polvo con péptidos de colágeno bioactivo que ayuda a apoyar la piel desde adentro — hidratación, elasticidad y luminosidad con constancia diaria.</p>
-          <ul class="beneficios">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Colágeno bioactivo de fácil absorción</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Apoya la piel desde adentro, no reemplaza tu rutina tópica</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Resultados con uso diario y constante</li>
-          </ul>
-          <a class="btn btn-primary" href="https://wa.me/51942029354?text=Hola%2C%20quiero%20consultar%20sobre%20el%20Beauty%20Focus%20Collagen%2B" target="_blank" rel="noopener">Consultar disponibilidad</a>
-        </div>
-      </div>
-    </div>
+    <!-- Se llena desde data/products.json filtrando por FEATURED_SKUS (ver el script al final del documento) -->
+    <div class="carousel producto-carousel reveal" id="productoCarousel"></div>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO COMPLETO ============ -->
+<!-- Se llena solo desde data/products.json (actualizado 1 vez al día por
+     GitHub Actions, ver scripts/fetch-products.mjs) -->
+<section id="catalogo">
+  <div class="container">
+    <span class="eyebrow reveal">Catálogo</span>
+    <h2 class="section-title reveal">Todo lo que tengo disponible</h2>
+    <p class="section-intro reveal">Precios y stock actualizados directo desde mi tienda Nu Skin. Escríbeme por WhatsApp para consultar cualquiera de estos productos.</p>
+
+    <div class="catalogo-tabs reveal" id="catalogoTabs"></div>
+    <p class="catalogo-loading" id="catalogoLoading">Cargando catálogo…</p>
+    <div class="catalogo-grid reveal" id="catalogoGrid"></div>
   </div>
 </section>
 
@@ -1114,6 +1329,7 @@
         <a href="#sobre-mi">Mi historia</a>
         <a href="#rutina">Rutina</a>
         <a href="#producto">Productos</a>
+        <a href="#catalogo">Catálogo</a>
         <a href="#negocio">Únete</a>
       </div>
     </div>
@@ -1126,6 +1342,39 @@
 <a class="wa-float" href="https://wa.me/51942029354?text=Hola%20Yosselim%2C%20tengo%20una%20consulta" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp">
   <svg viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 438.1h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 55.7 81.2 55.6 130.5 0 101.8-84.9 184.6-186.1 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
 </a>
+
+<!-- ============ MODAL DE PRODUCTO (destacados + catálogo) ============ -->
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="product-modal-backdrop" data-close></div>
+  <div class="product-modal-panel">
+    <button class="product-modal-back" data-back aria-label="Volver" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Volver
+    </button>
+    <button class="product-modal-close" data-close aria-label="Cerrar">✕</button>
+    <div class="product-modal-gallery">
+      <img class="product-modal-img" alt="">
+      <button class="product-modal-nav prev" aria-label="Imagen anterior">‹</button>
+      <button class="product-modal-nav next" aria-label="Imagen siguiente">›</button>
+      <div class="product-modal-dots"></div>
+    </div>
+    <div class="product-modal-top">
+      <h3 class="product-modal-name"></h3>
+      <p class="product-modal-meta"></p>
+      <div class="catalogo-price product-modal-price"></div>
+    </div>
+    <div class="product-modal-tabbar" role="tablist"></div>
+    <div class="product-modal-scroll">
+      <div class="product-modal-tabpanel"></div>
+    </div>
+    <div class="product-modal-footer">
+      <a class="btn btn-cart product-modal-buy" target="_blank" rel="noopener">
+        <svg viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 438.1h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 55.7 81.2 55.6 130.5 0 101.8-84.9 184.6-186.1 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        Comprar en
+      </a>
+    </div>
+  </div>
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1191,10 +1440,309 @@
       });
     });
   }
-  ['pillarsCarousel', 'testiCarousel', 'productoCarousel'].forEach(id => {
+  ['pillarsCarousel', 'testiCarousel'].forEach(id => {
     const el = document.getElementById(id);
     if (el) makeInfiniteCarousel(el);
   });
+
+  // ---- Catálogo + destacados + modal (data/products.json) ----
+  (async () => {
+    const tabsEl = document.getElementById('catalogoTabs');
+    const gridEl = document.getElementById('catalogoGrid');
+    const loadingEl = document.getElementById('catalogoLoading');
+    const featuredEl = document.getElementById('productoCarousel');
+    if (!tabsEl || !gridEl) return;
+
+    let products;
+    try {
+      const res = await fetch('data/products.json');
+      products = await res.json();
+    } catch (e) {
+      loadingEl.textContent = 'No se pudo cargar el catálogo. Intenta recargar la página.';
+      return;
+    }
+    loadingEl.hidden = true;
+
+    const productsBySku = new Map(products.map(p => [p.sku, p]));
+    // Los SKU dentro de includedItems/includedInKits a veces son IDs internos
+    // del CMS que no coinciden con ningún sku del catálogo: en ese caso se
+    // busca el producto por nombre exacto como respaldo.
+    const productsByName = new Map(products.map(p => [p.name, p]));
+    const resolveRef = (item) => productsBySku.get(item.sku) || productsByName.get(item.name);
+
+    // products.json se regenera entero cada día (scripts/fetch-products.mjs),
+    // así que los destacados se eligen por SKU aquí y no con un campo en el JSON.
+    const FEATURED_SKUS = ['60002208', '60001994', '60001647', '60004368', '60004442', '60130443', '60130353'];
+
+    const WA_PHONE = '51942029354';
+    const waLink = (name) =>
+      `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(`Hola, quiero consultar sobre ${name}`)}`;
+    const waCartLink = (p) =>
+      p.sku ? `https://wa.me/p/${p.sku}/${WA_PHONE}` : waLink(p.name);
+    const formatPrice = (n) => `S/ ${Number(n).toFixed(2)}`;
+    const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+    // El texto scrapeado a veces trae asteriscos de nota al pie escapados en
+    // markdown ("semanas\*") que se ven como una barra invertida suelta.
+    const cleanText = (s) => String(s || '').replace(/\\([*_~`])/g, '$1');
+    // products.json trae precios como texto ("S/ 383") porque es la misma
+    // estructura que se usa para subir al catálogo de Meta.
+    const parsePrice = (s) => {
+      const n = parseFloat(String(s || '').replace(/[^\d.]/g, ''));
+      return Number.isFinite(n) ? n : null;
+    };
+    const getPricing = (p) => {
+      const opt = p.purchaseOptions?.[0] || {};
+      return {
+        price: parsePrice(opt.price),
+        salePrice: parsePrice(opt.salePrice),
+        inStock: opt.stock === 'SI',
+      };
+    };
+    const priceHtmlOf = (p) => {
+      const { price, salePrice } = getPricing(p);
+      return salePrice
+        ? `<span class="before">${formatPrice(price)}</span><span class="now">${formatPrice(salePrice)}</span>`
+        : `<span class="now">${formatPrice(price)}</span>`;
+    };
+
+    const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>';
+    const waSvg = '<svg viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 438.1h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 55.7 81.2 55.6 130.5 0 101.8-84.9 184.6-186.1 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>';
+
+    function renderCard(p, i) {
+      const name = escapeHtml(p.name);
+      const { inStock } = getPricing(p);
+      const image = p.images?.[0]?.url || '';
+      return `
+        <div class="catalogo-card" data-sku="${p.sku}" style="animation-delay:${Math.min(i * 30, 300)}ms">
+          ${!inStock ? '<span class="catalogo-badge">Agotado</span>' : ''}
+          <div class="photo-frame">
+            <img src="${escapeHtml(image)}" alt="${name}" loading="lazy">
+            <div class="catalogo-price-badge">${priceHtmlOf(p)}</div>
+          </div>
+          <div class="catalogo-card-body">
+            <h4>${name}</h4>
+            <a class="btn btn-cart" href="${waCartLink(p)}" target="_blank" rel="noopener" data-no-modal>
+              ${waSvg}
+              Comprar en
+            </a>
+          </div>
+        </div>`;
+    }
+
+    function renderGrid(category) {
+      gridEl.innerHTML = products
+        .filter(p => p.category === category)
+        .map(renderCard)
+        .join('');
+    }
+
+    function renderFeaturedCard(p) {
+      const name = escapeHtml(p.name);
+      const image = p.images?.[0]?.url || '';
+      return `
+        <div class="producto-grid" data-sku="${p.sku}">
+          <div class="photo-frame square"><img src="${escapeHtml(image)}" alt="${name}" loading="lazy"></div>
+          <div>
+            <span class="eyebrow">Producto destacado</span>
+            <h3>${name}</h3>
+            <div class="producto-grid-desc"><p>${escapeHtml(p.description || '').trim()}</p></div>
+            <button type="button" class="btn btn-avail" data-open-sku="${p.sku}">Ver beneficios</button>
+          </div>
+        </div>`;
+    }
+
+    if (featuredEl) {
+      const featured = FEATURED_SKUS.map(sku => productsBySku.get(sku)).filter(Boolean);
+      featuredEl.innerHTML = featured.map(renderFeaturedCard).join('');
+      if (featured.length) makeInfiniteCarousel(featuredEl);
+    }
+
+    const categoryEmoji = {
+      'Manchas, rostro, cuerpo': '🧖🏻‍♀️',
+      'Reposición de Geles y serum': '🧴',
+      'Salud Interna': '💊',
+      'Dispositivos antiedad': '💆🏻‍♀️',
+      'Kits de básicos para emprender': '📦',
+      'Otros productos': '🏷️',
+    };
+
+    const categories = [...new Set(products.map(p => p.category))].filter(Boolean);
+    tabsEl.innerHTML = categories
+      .map((c, i) => `<button class="catalogo-tab${i === 0 ? ' active' : ''}" data-cat="${c}">${categoryEmoji[c] ? `<span class="catalogo-tab-emoji">${categoryEmoji[c]}</span>` : ''}<span class="catalogo-tab-label"><span>${c}</span></span></button>`)
+      .join('') + '<div class="catalogo-tabs-break"></div>';
+
+    tabsEl.querySelectorAll('.catalogo-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabsEl.querySelectorAll('.catalogo-tab').forEach(t => t.classList.toggle('active', t === tab));
+        renderGrid(tab.dataset.cat);
+      });
+    });
+
+    if (categories.length) renderGrid(categories[0]);
+
+    // ---- Modal de producto (imágenes + beneficios completos) ----
+    const modal = document.getElementById('productModal');
+    if (modal) {
+      const modalImg = modal.querySelector('.product-modal-img');
+      const modalDots = modal.querySelector('.product-modal-dots');
+      const modalPrev = modal.querySelector('.product-modal-nav.prev');
+      const modalNext = modal.querySelector('.product-modal-nav.next');
+      const modalName = modal.querySelector('.product-modal-name');
+      const modalMeta = modal.querySelector('.product-modal-meta');
+      const modalPrice = modal.querySelector('.product-modal-price');
+      const modalTabbar = modal.querySelector('.product-modal-tabbar');
+      const modalTabpanel = modal.querySelector('.product-modal-tabpanel');
+      const modalScroll = modal.querySelector('.product-modal-scroll');
+      const modalBuy = modal.querySelector('.product-modal-buy');
+      const modalBack = modal.querySelector('.product-modal-back');
+
+      let currentImages = [];
+      let currentImgIndex = 0;
+      let currentTabs = [];
+      let currentProduct = null;
+      let navStack = [];
+
+      function showImage(idx) {
+        currentImgIndex = idx;
+        modalImg.src = currentImages[idx]?.url || '';
+        modalDots.querySelectorAll('span').forEach((d, di) => d.classList.toggle('active', di === idx));
+      }
+
+      const boxSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>';
+
+      function renderChip(item) {
+        const ref = resolveRef(item);
+        const image = ref?.images?.[0]?.url || '';
+        const qty = item.quantity > 1 ? `<span class="chip-qty">x${item.quantity}</span>` : '';
+        return `
+          <div class="product-modal-chip" ${ref ? `data-sku="${ref.sku}"` : ''}>
+            ${image ? `<img src="${escapeHtml(image)}" alt="">` : `<span class="chip-noimg">${boxSvg}</span>`}
+            <span class="chip-name">${escapeHtml(item.name)}</span>
+            ${qty}
+          </div>`;
+      }
+
+      function showTab(idx) {
+        if (!currentTabs.length) return;
+        modalTabpanel.innerHTML = currentTabs[idx].html;
+        modalTabbar.querySelectorAll('.product-modal-tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+      }
+
+      function buildTabs(p) {
+        const tabs = [];
+        // La descripción y el modo de uso vienen del catálogo de Nu Skin y
+        // pueden traer HTML propio (negritas, saltos de línea): se insertan
+        // tal cual en vez de escaparlas para que se vean bien formateadas.
+        if (p.description) {
+          tabs.push({ title: 'Descripción', html: `<p>${cleanText(p.description)}</p>` });
+        }
+        if (p.includedItems && p.includedItems.length) {
+          tabs.push({ title: 'Productos incluidos', html: `<div class="product-modal-included">${p.includedItems.map(renderChip).join('')}</div>` });
+        } else if (p.includedInKits && p.includedInKits.length) {
+          tabs.push({ title: 'Incluido en', html: `<div class="product-modal-included">${p.includedInKits.map(renderChip).join('')}</div>` });
+        }
+        if (p.benefits && p.benefits.length) {
+          // Algunos kits traen varios puntos separados por "•" dentro de un
+          // mismo texto de beneficio: se separan para que cada uno sea su
+          // propio ítem de lista en vez de un solo bloque con viñetas sueltas.
+          const benefitItems = p.benefits.flatMap(b => b.split('•').map(s => cleanText(s.trim())).filter(Boolean));
+          tabs.push({ title: 'Beneficios', html: `<ul class="beneficios product-modal-benefits">${benefitItems.map(b => `<li>${checkSvg} ${escapeHtml(b)}</li>`).join('')}</ul>` });
+        }
+        if (p.usage && p.usage.length) {
+          tabs.push({ title: 'Modo de uso', html: p.usage.map(u => `<p>${cleanText(u)}</p>`).join('') });
+        }
+        if (p.ingredients && p.ingredients.length) {
+          const items = p.ingredients.map(ing => `<li>${checkSvg}<span><strong>${escapeHtml(ing.name || '')}</strong>${cleanText(ing.description)}</span></li>`).join('');
+          tabs.push({ title: 'Ingredientes', html: `<ul class="product-modal-ingredients">${items}</ul>` });
+        }
+        return tabs;
+      }
+
+      function openModal(p, { navigate, back } = {}) {
+        if (navigate && currentProduct) navStack.push(currentProduct);
+        else if (!back) navStack = [];
+        currentProduct = p;
+        modalBack.hidden = !navStack.length;
+
+        currentImages = [...(p.images || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+        modalImg.alt = p.name;
+        modalName.textContent = p.name;
+        modalMeta.textContent = [p.brand, p.size].filter(Boolean).join(' · ');
+        modalPrice.innerHTML = priceHtmlOf(p);
+        modalBuy.href = waCartLink(p);
+
+        currentTabs = buildTabs(p);
+        modalTabbar.innerHTML = currentTabs
+          .map((t, i) => `<button type="button" class="product-modal-tab${i === 0 ? ' active' : ''}" data-idx="${i}">${t.title}</button>`)
+          .join('');
+        modalTabbar.hidden = !currentTabs.length;
+        showTab(0);
+
+        const multi = currentImages.length > 1;
+        modalPrev.hidden = !multi;
+        modalNext.hidden = !multi;
+        modalDots.innerHTML = multi
+          ? currentImages.map((_, di) => `<span></span>`).join('')
+          : '';
+        showImage(0);
+
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        modalScroll.scrollTop = 0;
+      }
+
+      function goBack() {
+        const prev = navStack.pop();
+        if (prev) openModal(prev, { back: true });
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        currentProduct = null;
+        navStack = [];
+      }
+
+      modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
+      modalBack.addEventListener('click', goBack);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+      modalPrev.addEventListener('click', () => showImage((currentImgIndex - 1 + currentImages.length) % currentImages.length));
+      modalNext.addEventListener('click', () => showImage((currentImgIndex + 1) % currentImages.length));
+      modalTabbar.addEventListener('click', (e) => {
+        const tab = e.target.closest('.product-modal-tab');
+        if (tab) showTab(Number(tab.dataset.idx));
+      });
+      modalTabpanel.addEventListener('click', (e) => {
+        const chip = e.target.closest('.product-modal-chip[data-sku]');
+        if (!chip) return;
+        const p = productsBySku.get(chip.dataset.sku);
+        if (p) openModal(p, { navigate: true });
+      });
+
+      function bindCardOpen(container) {
+        container.addEventListener('click', (e) => {
+          if (e.target.closest('[data-no-modal]') || e.target.closest('[data-open-sku]')) {
+            const openBtn = e.target.closest('[data-open-sku]');
+            if (openBtn) {
+              const p = productsBySku.get(openBtn.dataset.openSku);
+              if (p) openModal(p);
+            }
+            return;
+          }
+          const card = e.target.closest('[data-sku]');
+          if (!card) return;
+          const p = productsBySku.get(card.dataset.sku);
+          if (p) openModal(p);
+        });
+      }
+      bindCardOpen(gridEl);
+      if (featuredEl) bindCardOpen(featuredEl);
+    }
+  })();
 </script>
 
 </body>
